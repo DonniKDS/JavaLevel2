@@ -2,8 +2,15 @@ package homework2.myException;
 
 public class MyArraySizeException extends RuntimeException {
 
-    public MyArraySizeException() {
+    private int length, height;
+
+    public MyArraySizeException(int height, int length) {
         super();
-        System.out.println("Некорректный массив. Необходим массив размером 4х4!");
+        this.length = length;
+        this.height = height;
+    }
+
+    public void printMyException(){
+        System.out.printf("Некорректный массив. Необходим массив размером %dх%d! \n", height, length);
     }
 }

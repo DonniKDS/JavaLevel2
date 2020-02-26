@@ -4,7 +4,8 @@ import homework2.myException.*;
 
 public class Homework2 {
 
-    private final int ARRAY_SIZE = 4;
+    public final int ARRAY_HEIGHT = 4;
+    public final int ARRAY_LENGTH = 4;
 
     public static void main(String[] args) {
         String[][] s1 = new String[4][4];
@@ -21,20 +22,34 @@ public class Homework2 {
         try{
             home.printArray(s1);
             home.exceptionTest(s1);
-        }catch (MyArraySizeException | MyArrayDataException e){ }
+        }catch (MyArraySizeException e){
+            e.printMyException();
+        }catch (MyArrayDataException e){
+            e.printMyException();
+        }
         try{
             home.printArray(s2);
             home.exceptionTest(s2);
-        }catch (MyArraySizeException | MyArrayDataException e){ }
+        }catch (MyArraySizeException e){
+            e.printMyException();
+        }catch (MyArrayDataException e){
+            e.printMyException();
+        }
         try{
             home.printArray(s3);
             home.exceptionTest(s3);
-        }catch (MyArraySizeException | MyArrayDataException e){ }
+        }catch (MyArraySizeException e){
+            e.printMyException();
+        }catch (MyArrayDataException e){
+            e.printMyException();
+        }
     }
 
     public void exceptionTest(String[][] strings) throws MyArraySizeException, MyArrayDataException {
-        if (strings.length != ARRAY_SIZE || strings[0].length != ARRAY_SIZE){
-            throw new MyArraySizeException();
+        for(int i = 0; i < strings.length; i++){
+            if (strings.length != ARRAY_HEIGHT || strings[i].length != ARRAY_LENGTH){
+                throw new MyArraySizeException(ARRAY_HEIGHT, ARRAY_LENGTH);
+            }
         }
         int sum = 0;
         for (int i = 0; i < strings.length; i++){

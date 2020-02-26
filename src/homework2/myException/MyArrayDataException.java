@@ -2,8 +2,15 @@ package homework2.myException;
 
 public class MyArrayDataException extends RuntimeException {
 
-    public MyArrayDataException(int length, int height) {
+    private int length, height;
+
+    public MyArrayDataException(int height, int length) {
         super();
-        System.out.printf("Эллемент массива в ячейке [%d][%d] не является числом!", length, height);
+        this.length = length;
+        this.height = height;
+    }
+
+    public void printMyException(){
+        System.out.printf("Эллемент массива в ячейке [%d][%d] не является числом! \n", height, length);
     }
 }
