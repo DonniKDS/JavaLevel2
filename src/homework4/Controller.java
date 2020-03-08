@@ -36,7 +36,13 @@ public class Controller implements Initializable {
 
     @FXML
     public void sendMessageAction(ActionEvent actionEvent) {
-
+        if(outgoingMessage.getText().isEmpty()){
+            return;
+        }
+        if (usersList.getFocusModel().getFocusedItem() == null){
+            chatList.appendText("Выберите пользователя! \n");
+            return;
+        }
         chatList.appendText(usersList.getFocusModel().getFocusedItem() + ": " + outgoingMessage.getText() + "\n");
         outgoingMessage.clear();
     }
