@@ -1,22 +1,12 @@
 package homework4;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static javafx.application.Application.launch;
 
 public class Controller implements Initializable {
 
@@ -32,6 +22,8 @@ public class Controller implements Initializable {
             "Саша",
             "Максим"
     };
+
+    String user;
 
     @FXML
     private ListView<String> usersList;
@@ -54,7 +46,4 @@ public class Controller implements Initializable {
         usersList.getItems().addAll(users);
     }
 
-    public void aboutItemAction(ActionEvent actionEvent) {
-
-    }
 }
