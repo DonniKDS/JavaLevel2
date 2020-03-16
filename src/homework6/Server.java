@@ -42,7 +42,7 @@ public class Server {
             try {
                 String message = "";
                 out = new DataOutputStream(socket.getOutputStream());
-                while (!socket.isClosed()) {
+                while (true) {
                     String m = reader.readLine();
                     if (m.equalsIgnoreCase(END_COMMAND)) {
                         break;
@@ -55,9 +55,10 @@ public class Server {
                     }
                 }
                 socket.close();
-                reader.close();
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                closeReader();
             }
         }).start();
 
@@ -72,5 +73,13 @@ public class Server {
                 System.out.println("Connection has been closed!");
             }
         }).start();
+    }
+
+    public void closeReader() {
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

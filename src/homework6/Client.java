@@ -35,11 +35,11 @@ public class Client {
     }
 
     public void clientMessage() {
-        new Thread(() -> {
+       new Thread(() -> {
             try {
                 String message = "";
                 out = new DataOutputStream(socket.getOutputStream());
-                while (!socket.isClosed()) {
+                while (true) {
                     String m = reader.readLine();
                     if (m.equalsIgnoreCase(END_COMMAND)) {
                         break;
@@ -52,9 +52,10 @@ public class Client {
                     }
                 }
                 socket.close();
-                reader.close();
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                closeReader();
             }
         }).start();
 
@@ -69,6 +70,14 @@ public class Client {
                 System.out.println("Connection has been closed!");
             }
         }).start();
+    }
+
+    public void closeReader() {
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 
