@@ -101,12 +101,26 @@ public class ClientHandler {
     }
 
     private void authentication() throws IOException {
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(120000);
+                clientSocket.close();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        thread.start();
+
         while (true) {
             Command command = readCommand();
             if (command == null) {
                 continue;
             }
             if (command.getType() == CommandType.AUTH) {
+                thread.interrupt();
                 boolean successfulAuth = processAuthCommand(command);
                 if (successfulAuth){
                     return;
