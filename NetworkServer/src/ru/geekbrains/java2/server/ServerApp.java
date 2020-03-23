@@ -2,7 +2,7 @@ package ru.geekbrains.java2.server;
 
 public class ServerApp {
 
-    private static final int DEFAULT_PORT = 15151;
+    private static final int DEFAULT_PORT = 10000;
 
     public static void main(String[] args) {
         int port = getServerPort(args);

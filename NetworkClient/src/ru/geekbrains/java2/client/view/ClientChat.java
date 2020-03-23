@@ -5,6 +5,7 @@ import ru.geekbrains.java2.client.controller.ClientController;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 public class ClientChat extends JFrame {
 
@@ -18,7 +19,6 @@ public class ClientChat extends JFrame {
 
     public ClientChat(ClientController controller) {
         this.controller = controller;
-        setTitle(controller.getUsername());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(640, 480);
         setLocationRelativeTo(null);
@@ -41,21 +41,28 @@ public class ClientChat extends JFrame {
         String message = messageTextField.getText().trim();
         if (message.isEmpty()) {
             return;
-        } else if (message.startsWith("/w")){
-            String[] s = message.split("\\s+", 3);
-            appendOwnMessageForAnotherUser(s[2], s[1]);
-        } else {
-            appendOwnMessage(message);
         }
 
-        controller.sendMessage(message);
+        appendOwnMessage(message);
+
+        if (usersList.getSelectedIndex() < 1) {
+            controller.sendMessageToAllUsers(message);
+        }
+        else {
+            String username = usersList.getSelectedValue();
+            controller.sendPrivateMessage(username, message);
+        }
+
         messageTextField.setText(null);
     }
 
     public void appendMessage(String message) {
-        SwingUtilities.invokeLater(() -> {
-            chatText.append(message);
-            chatText.append(System.lineSeparator());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                chatText.append(message);
+                chatText.append(System.lineSeparator());
+            }
         });
     }
 
@@ -64,7 +71,16 @@ public class ClientChat extends JFrame {
         appendMessage("Я: " + message);
     }
 
-    private void appendOwnMessageForAnotherUser(String message, String nickname) {
-        appendMessage("Личное сообщение для " + nickname + " :" + message);
+
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(this, "Failed to send message!");
+    }
+
+    public void updateUsers(List<String> users) {
+        SwingUtilities.invokeLater(() -> {
+            DefaultListModel<String> model = new DefaultListModel<>();
+            model.addAll(users);
+            usersList.setModel(model);
+        });
     }
 }
